@@ -1,4 +1,23 @@
+@media (prefers-color-scheme: dark) {
+    html, body {
+        background: rgb(35, 34, 43);
+    }
+
+    .button.hover, .button-small.hover {
+        background-color: royalblue !important;
+    }
+
+    .settings {
+        background-color: dimgrey !important;
+    }
+
+    .settings:hover {
+        background-color: seagreen !important;
+    }
+}
+
 html, body {
+    z-index: 10;
     min-width: 400px;
     padding: 0;
     overflow-x: hidden;

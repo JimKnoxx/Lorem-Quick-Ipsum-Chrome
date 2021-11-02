@@ -1,3 +1,21 @@
+@media (prefers-color-scheme: dark) {
+    html, body {
+        background: rgb(35, 34, 43);
+        color: rgb(251,251,254);
+    }
+
+    input, select {
+        background: rgb(35, 34, 43);
+        color: rgb(251,251,254);
+        border-color: rgba(249,249,250,0.2);
+    }
+}
+
+html, body {
+    height: 100%;
+    padding-top: 8px;
+}
+
 .row {
     padding: 4px;
 }

@@ -14,7 +14,7 @@ let maxSentenceLength ;
 let minParagraphLength;
 let maxParagraphLength;
 
-const device = chrome || browser;
+const device = window.chrome || window.browser;
 if (null == device) {
     close();
 }

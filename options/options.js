@@ -28,19 +28,32 @@ function restoreOptions() {
 
     device.storage.sync.get({
         minWordLength: 0,
-        wordFirstLetter: "WORD_FIRST_LETTER_RANDOM",
+        wordFirstLetter: "random",
         minSentenceLength: 7,
         maxSentenceLength: 10,
         minParagraphLength: 4,
         maxParagraphLength: 8
     }, function(res) {
         document.getElementById("minWordLength").value = res.minWordLength;
-        document.getElementById("wordFirstLetter").value = res.wordFirstLetter;
+        document.getElementById("wordFirstLetter").value = legacySelectFix(res.wordFirstLetter);
         document.getElementById("minSentenceLength").value = res.minSentenceLength;
         document.getElementById("maxSentenceLength").value = res.maxSentenceLength;
         document.getElementById("minParagraphLength").value = res.minParagraphLength;
         document.getElementById("maxParagraphLength").value = res.maxParagraphLength;
     });
+}
+
+function legacySelectFix(string) {
+    switch (string) {
+        case "WORD_FIRST_LETTER_RANDOM":
+            return "random";
+        case "WORD_FIRST_LETTER_BIG":
+            return "big";
+        case "WORD_FIRST_LETTER_SMALL":
+            return "small";
+        default:
+            return string;
+    }
 }
 
 document.addEventListener('DOMContentLoaded', restoreOptions);
