@@ -5,3 +5,6 @@
 This plugin provides a simple and quick way to copy random Lorem Ipsum words, sentences and paragraphs.
 
 The design idea is based on the MacOS plugin LittleIpsum.
+
+## Official download ##
+https://chrome.google.com/webstore/detail/lorem-quick-ipsum/ngfhonenddjnpgnhfdoioiianfaecife
