@@ -11,6 +11,11 @@
         "storage"
     ],
 
+    "host_permissions": [
+        "https://thispersondoesnotexist.com/image",
+        "https://picsum.photos/*"
+    ],
+
     "options_ui": {
             "page": "options/options.html",
             "browser_style": true

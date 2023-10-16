@@ -58,12 +58,62 @@ sentences.forEach(sentence => hoverElements(sentence, sentences));
 const paragraphs = document.querySelectorAll('[id^=paragraph-]');
 paragraphs.forEach(paragraph => hoverElements(paragraph, paragraphs));
 
+document.getElementById('face').addEventListener('click', () => {
+    copyImage('https://thispersondoesnotexist.com/image');
+});
+
+document.getElementById('picsum').addEventListener('click', () => {
+    const w = document.getElementById('fwidth').value;
+    const h = document.getElementById('fheight').value;
+    const g = document.getElementById('fgray').checked;
+    const allowB = document.getElementById('fblurAllow').checked;
+    const amountB = document.getElementById('fblurAmount').value;
+
+    var url = `https://picsum.photos/${w}/${h}`;
+    if (g) {
+        url += '?grayscale';
+    }
+
+    if (allowB) {
+        url += g ? '&' : '?'
+        url += `blur=${amountB}`;
+    }
+
+    copyImage(url);
+});
+
 document.getElementById('settings').addEventListener('click', () => {
     chrome.runtime.openOptionsPage();
     close();
 });
 
 /** FUNCTIONS */
+async function copyImage(imageURL){
+  const blob = await imageToBlob(imageURL)
+  const item = new ClipboardItem({ "image/png": blob });
+  await navigator.clipboard.write([item]);
+  close();
+}
+
+function imageToBlob(imageURL) {
+  const img = new Image;
+  const c = document.createElement("canvas");
+  const ctx = c.getContext("2d");
+  img.crossOrigin = "";
+  img.src = imageURL;
+  return new Promise(resolve => {
+    img.onload = function () {
+      c.width = this.naturalWidth;
+      c.height = this.naturalHeight;
+      ctx.drawImage(this, 0, 0);
+      c.toBlob((blob) => {
+        // here the image is a blob
+        resolve(blob)
+    }, "image/png", 1);
+    };
+  })
+}
+
 /* Adding event listener to "buttons" */
 function hoverElements(item, elements) {
     item.addEventListener('mouseover', () => {
@@ -82,7 +132,7 @@ function hoverElements(item, elements) {
     item.addEventListener('click', () => {
         const hoverId = item.id.substr(item.id.length - 1);
         if (item.id.startsWith('word')) {
-            navigator.clipboard.writeText(getWords(hoverId)).then(function() {
+            navigator.clipboard.writeText(getWordsLength(hoverId)).then(function() {
                 close();
             }, function() {
                 console.error("Unable to write to clipboard. :-(");
@@ -116,7 +166,7 @@ function hoverElements(item, elements) {
     }
 })()
 
-/* Filter the dictionary by user specified word length */
+/* Filter the dictionary by user specified word length, greater then */
 function getWordsLongerThen(length) {
     if (minWordLength === 0) {
         return lorem;
@@ -125,6 +175,37 @@ function getWordsLongerThen(length) {
     return lorem.filter((element) => {
         return element.length > length;
     });
+}
+
+/* Filter the dictionary by user specified word length, exactly */
+function getWordsExactly(length) {
+    return lorem.filter((element) => {
+        return element.length === length;
+    });
+}
+
+/* Returns a string with a defined length of words */
+const WORD_LENGTH = [4, 8, 16, 32, 64];
+function getWordsLength(length) {
+    if (length <= 2) {
+        const filteredWords = getWordsExactly(WORD_LENGTH[length - 1]);
+        if (wordFirstLetter === WORD_FIRST_LETTER_BIG || (wordFirstLetter === WORD_FIRST_LETTER_RANDOM && getRandomInt(10) > 4)) {
+            return capitalizeFirstLetter(filteredWords[getRandomInt(filteredWords.length)]);
+        } else {
+            return filteredWords[getRandomInt(filteredWords.length)];
+        }
+    } else {
+        let returnWord = "";
+        while (returnWord.length <= WORD_LENGTH[length - 1]) {
+            if (wordFirstLetter === WORD_FIRST_LETTER_BIG || (wordFirstLetter === WORD_FIRST_LETTER_RANDOM && getRandomInt(10) > 4)) {
+                returnWord += capitalizeFirstLetter(lorem[getRandomInt(lorem.length)]);
+            } else {
+                returnWord += lorem[getRandomInt(lorem.length)];
+            }
+        }
+
+        return returnWord.substring(0, WORD_LENGTH[length - 1]);
+    }
 }
 
 /* Returns a string with the given amount of words */
@@ -162,7 +243,7 @@ function getParagraphs(amount) {
     let paragraphs = "";
 
     for (let i = 0; i < amount; i++) {
-        paragraphs += getSentences(getRandomInt(maxParagraphLength, minParagraphLength)) + "\n"
+        paragraphs += getSentences(getRandomInt(maxParagraphLength, minParagraphLength)) + "\n\n"
     }
 
     return paragraphs.trim();

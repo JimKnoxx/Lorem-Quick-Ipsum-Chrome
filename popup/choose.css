@@ -18,23 +18,65 @@
 
 html, body {
     z-index: 10;
-    min-width: 400px;
+    min-width: 420px;
     padding: 0;
     overflow-x: hidden;
+}
+
+.container {
+  margin: auto;
+}
+
+.left {
+  width: 35%;
+  float: left;
+  flex-direction: column;
+}
+
+.right {
+  padding-left: 16px;
+  flex-direction: column;
 }
 
 .hidden {
     display: none;
 }
 
+.svg {
+    display: flex;
+}
+
+.svg:hover {
+    color: lightcoral;
+}
+
 .button-small {
     display: inline-block;
     background-color: grey;
     float: left;
-    width: 70px;
-    height: 15px;
+    height: 16px;
     border-radius: 8px;
     cursor: pointer;
+}
+
+#word-1 {
+    width: 16px;
+}
+
+#word-2 {
+    width: 24px;
+}
+
+#word-3 {
+    width: 56px;
+}
+
+#word-4 {
+    width: 96px;
+}
+
+#word-5 {
+    width: 192px;
 }
 
 .button {
@@ -46,29 +88,42 @@ html, body {
 .row {
     display: flex;
     justify-content: space-between;
-    height: 15px;
-    margin-bottom: 10px;
+    height: 16px;
+    margin-bottom: 8px;
 }
 
 .paragraph {
-    height: 45px;
-    margin-bottom: 10px;
+    float: right;
+    width: 65%;
+    height: 48px;
+    margin-bottom: 8px;
 }
 
 .button.hover, .button-small.hover {
     background-color: lightblue;
 }
 
-.settings {
-    background-color: lightgrey;
-    height: 25px;
-    display: flex;
+.mb-1 {
+    margin-bottom: 8px;
+}
+
+input[type=number] {
+    width: 48px;
+}
+
+.center {
     justify-content: center;
     align-items: center;
 }
 
+.small { font: 8px sans-serif; }
+
+.settings {
+    margin-top: auto;
+}
+
 .settings:hover {
-    background-color: lightgreen;
+    color: lightgreen;
 }
 
 .tooltip {
@@ -81,8 +136,8 @@ html, body {
     background-color: black;
     color: #fff;
     text-align: center;
-    border-radius: 6px;
-    padding: 5px;
+    border-radius: 8px;
+    padding: 4px;
     position: absolute;
     z-index: 1;
     top: 150%;
@@ -92,14 +147,6 @@ html, body {
 
 .tooltip .tooltiptext.last {
     top: -115%;
-}
-
-.tooltip-left-fix {
-    margin-left: -35px !important;
-}
-
-.tooltip-right-fix {
-    margin-left: -85px !important;
 }
 
 .tooltip-paragraph-fix {

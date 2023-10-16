@@ -8,58 +8,93 @@
 </head>
 
 <body>
-<div id="row-words" class="row">
-  <div id="word-1" class="button-small tooltip">
-    <span class="tooltiptext noselect tooltip-left-fix">1 random word</span>
-  </div>
-  <div id="word-2" class="button-small tooltip">
-    <span class="tooltiptext noselect">2 random words</span>
-  </div>
-  <div id="word-3" class="button-small tooltip">
-    <span class="tooltiptext noselect">3 random words</span>
-  </div>
-  <div id="word-4" class="button-small tooltip">
-    <span class="tooltiptext noselect">4 random words</span>
-  </div>
-  <div id="word-5" class="button-small tooltip">
-    <span class="tooltiptext noselect tooltip-right-fix">5 random words</span>
-  </div>
-</div>
-<div id="block-sentences" class="block">
-  <div id="sentence-1" class="button row tooltip">
-    <span class="tooltiptext noselect">1 random sentence</span>
-  </div>
-  <div id="sentence-2" class="button row tooltip">
-    <span class="tooltiptext noselect">2 random sentences</span>
-  </div>
-  <div id="sentence-3" class="button row tooltip">
-    <span class="tooltiptext noselect">3 random sentences</span>
-  </div>
-  <div id="sentence-4" class="button row tooltip">
-    <span class="tooltiptext noselect">4 random sentences</span>
-  </div>
-  <div id="sentence-5" class="button row tooltip">
-    <span class="tooltiptext noselect">5 random sentences</span>
-  </div>
-</div>
-<div id="block-paragraph">
-  <div id="paragraph-1" class="button paragraph tooltip">
-    <span class="tooltiptext noselect tooltip-paragraph-fix">1 random paragraph</span>
-  </div>
-  <div id="paragraph-2" class="button paragraph tooltip">
-    <span class="tooltiptext noselect tooltip-paragraph-fix">2 random paragraphs</span>
-  </div>
-  <div id="paragraph-3" class="button paragraph tooltip">
-    <span class="tooltiptext noselect tooltip-paragraph-fix">3 random paragraphs</span>
-  </div>
-  <div id="paragraph-4" class="button paragraph tooltip">
-    <span class="tooltiptext noselect last">4 random paragraphs</span>
-  </div>
-</div>
+    <div class="container">
+        <div class="left">
+            <div id="face" class="svg center">
+                <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
+                    <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
+                    <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
+                </svg>
+                <span>I need a face</span>
+            </div>
+            <div id="picsum" class="svg center mb-1">
+                <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="currentColor" class="bi bi-card-image" viewBox="0 0 16 16">
+                    <path d="M6.002 5.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"/>
+                    <path d="M1.5 2A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13zm13 1a.5.5 0 0 1 .5.5v6l-3.775-1.947a.5.5 0 0 0-.577.093l-3.71 3.71-2.66-1.772a.5.5 0 0 0-.63.062L1.002 12v.54A.505.505 0 0 1 1 12.5v-9a.5.5 0 0 1 .5-.5h13z"/>
+                </svg>
+                <span>I need a picture</span>
+            </div>
+            <div class="center">
+                <input type="number" min=32 max=1024 value="1024" id="fwidth" name="fwidth">
+                x
+                <input type="number" min=32 max=1024 value="1024" id="fheight" name="fheight">
+            </div>
+            <input type="checkbox" id="fgray" name="fgray">Gray<br>
+            <input type="checkbox" id="fblurAllow" name="fblurAllow">Blur
+            <input type="number" min=1 max=10 value=1 id="fblurAmount" name="fblurAmount"><br>
+            <hr>
+            <div id="settings" class="svg settings center">
+                <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="currentColor" class="bi bi-sliders2" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M10.5 1a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-1 0V4H1.5a.5.5 0 0 1 0-1H10V1.5a.5.5 0 0 1 .5-.5ZM12 3.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5Zm-6.5 2A.5.5 0 0 1 6 6v1.5h8.5a.5.5 0 0 1 0 1H6V10a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5ZM1 8a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2A.5.5 0 0 1 1 8Zm9.5 2a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-1 0V13H1.5a.5.5 0 0 1 0-1H10v-1.5a.5.5 0 0 1 .5-.5Zm1.5 2.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5Z"/>
+                </svg>
+                <span>Settings</span>
+            </div>
 
-<div id="settings" class="button settings">Settings</div>
+        </div>
+        <div class="right">
+            <div id="row-words" class="row">
+              <div id="word-1" class="button-small tooltip">
+                <span class="tooltiptext noselect">4 chars</span>
+              </div>
+              <div id="word-2" class="button-small tooltip">
+                <span class="tooltiptext noselect">8 chars</span>
+              </div>
+              <div id="word-3" class="button-small tooltip">
+                <span class="tooltiptext noselect">16 chars</span>
+              </div>
+              <div id="word-4" class="button-small tooltip">
+                <span class="tooltiptext noselect">32 chars</span>
+              </div>
+              <div id="word-5" class="button-small tooltip">
+                <span class="tooltiptext noselect">64 chars</span>
+              </div>
+            </div>
+            <div id="block-sentences" class="block">
+              <div id="sentence-1" class="button row tooltip">
+                <span class="tooltiptext noselect">1 sentence</span>
+              </div>
+              <div id="sentence-2" class="button row tooltip">
+                <span class="tooltiptext noselect">2 sentences</span>
+              </div>
+              <div id="sentence-3" class="button row tooltip">
+                <span class="tooltiptext noselect">3 sentences</span>
+              </div>
+              <div id="sentence-4" class="button row tooltip">
+                <span class="tooltiptext noselect">4 sentences</span>
+              </div>
+              <div id="sentence-5" class="button row tooltip">
+                <span class="tooltiptext noselect">5 sentences</span>
+              </div>
+            </div>
+            <div id="block-paragraph">
+              <div id="paragraph-1" class="button paragraph tooltip">
+                <span class="tooltiptext noselect tooltip-paragraph-fix">1 paragraph</span>
+              </div>
+              <div id="paragraph-2" class="button paragraph tooltip">
+                <span class="tooltiptext noselect tooltip-paragraph-fix">2 paragraphs</span>
+              </div>
+              <div id="paragraph-3" class="button paragraph tooltip">
+                <span class="tooltiptext noselect tooltip-paragraph-fix">3 paragraphs</span>
+              </div>
+              <div id="paragraph-4" class="button paragraph tooltip">
+                <span class="tooltiptext noselect last">4 paragraphs</span>
+              </div>
+            </div>
+        </div>
+    </div>
 
-<script src="choose.js"></script>
+
+    <script src="choose.js"></script>
 </body>
 
 </html>
