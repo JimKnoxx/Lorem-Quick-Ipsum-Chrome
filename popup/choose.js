@@ -59,25 +59,28 @@ const paragraphs = document.querySelectorAll('[id^=paragraph-]');
 paragraphs.forEach(paragraph => hoverElements(paragraph, paragraphs));
 
 document.getElementById('face').addEventListener('click', () => {
-    copyImage('https://thispersondoesnotexist.com/image');
+    copyImage('https://thispersondoesnotexist.com/');
+});
+
+document.getElementById('sizePreset1').addEventListener('click', () => {
+    document.getElementById('fwidth').value = 512;
+    document.getElementById('fheight').value = 512;
+});
+
+document.getElementById('sizePreset2').addEventListener('click', () => {
+    document.getElementById('fwidth').value = 720;
+    document.getElementById('fheight').value = 480;
+});
+
+document.getElementById('sizePreset3').addEventListener('click', () => {
+    document.getElementById('fwidth').value = 640;
+    document.getElementById('fheight').value = 360;
 });
 
 document.getElementById('picsum').addEventListener('click', () => {
     const w = document.getElementById('fwidth').value;
     const h = document.getElementById('fheight').value;
-    const g = document.getElementById('fgray').checked;
-    const allowB = document.getElementById('fblurAllow').checked;
-    const amountB = document.getElementById('fblurAmount').value;
-
-    var url = `https://picsum.photos/${w}/${h}`;
-    if (g) {
-        url += '?grayscale';
-    }
-
-    if (allowB) {
-        url += g ? '&' : '?'
-        url += `blur=${amountB}`;
-    }
+    const url = `https://picsum.photos/${w}/${h}`;
 
     copyImage(url);
 });
@@ -111,7 +114,7 @@ function imageToBlob(imageURL) {
         resolve(blob)
     }, "image/png", 1);
     };
-  })
+  });
 }
 
 /* Adding event listener to "buttons" */
