@@ -1,4 +1,5 @@
 /** SETUP */
+import {hasWCAGContrastToWhite, shadeColor} from "../resources/colorHelper.js";
 
 const WORD_FIRST_LETTER_SMALL = 'small';
 const WORD_FIRST_LETTER_BIG = 'big';
@@ -26,7 +27,8 @@ device.storage.sync.get({
     minSentenceLength: 7,
     maxSentenceLength: 10,
     minParagraphLength: 4,
-    maxParagraphLength: 8
+    maxParagraphLength: 8,
+    backgroundColorSelector: "#666666FF",
 }, (res) => {
     minWordLength = res.minWordLength;
     switch (res.wordFirstLetter) {
@@ -47,16 +49,57 @@ device.storage.sync.get({
     maxSentenceLength = res.maxSentenceLength;
     minParagraphLength = res.minParagraphLength;
     maxParagraphLength = res.maxParagraphLength;
+    setPanelBackgroundColor(res.backgroundColorSelector);
 });
 
+function setPanelBackgroundColor(hex) {
+    const htmlRoot = document.querySelector(':root');
+    const darkMode = !hasWCAGContrastToWhite(hex);
+
+    htmlRoot.style.setProperty('--panel-bg', hex);
+    htmlRoot.style.setProperty('--button-hover-bg',
+        shadeColor(hex, darkMode ? -100 : 100)
+    );
+    if (darkMode) {
+        htmlRoot.setAttribute('data-theme', 'dark');
+    }
+}
+
 const words = document.querySelectorAll('[id^=word-]');
-words.forEach(word => hoverElements(word, words));
+words.forEach(word => addClickEvent(word, words));
 
 const sentences = document.querySelectorAll('[id^=sentence-]');
-sentences.forEach(sentence => hoverElements(sentence, sentences));
+sentences.forEach(sentence => addClickEvent(sentence, sentences));
 
 const paragraphs = document.querySelectorAll('[id^=paragraph-]');
-paragraphs.forEach(paragraph => hoverElements(paragraph, paragraphs));
+paragraphs.forEach(paragraph => addClickEvent(paragraph, paragraphs));
+
+function addClickEvent(item, elements) {
+    item.addEventListener('click', () => {
+        const hoverId = item.id.substring(item.id.length - 1);
+        if (item.id.startsWith('word')) {
+            navigator.clipboard.writeText(getWordsLength(hoverId)).then(function() {
+                close();
+            }, function() {
+                console.error("Unable to write to clipboard. :-(");
+            });
+        }
+        if (item.id.startsWith('sentence')) {
+            navigator.clipboard.writeText(getSentences(hoverId)).then(function() {
+                close();
+            }, function() {
+                console.error("Unable to write to clipboard. :-(");
+            });
+        }
+        if (item.id.startsWith('paragraph')) {
+            navigator.clipboard.writeText(getParagraphs(hoverId)).then(function() {
+                close();
+            }, function() {
+                console.error("Unable to write to clipboard. :-(");
+            });
+        }
+    });
+}
 
 document.getElementById('face').addEventListener('click', () => {
     copyImage('https://thispersondoesnotexist.com/');
@@ -115,47 +158,6 @@ function imageToBlob(imageURL) {
     }, "image/png", 1);
     };
   });
-}
-
-/* Adding event listener to "buttons" */
-function hoverElements(item, elements) {
-    item.addEventListener('mouseover', () => {
-        const hoverId = item.id.substr(item.id.length - 1);
-        elements.forEach(element => {
-            if (element.id.substr(element.id.length - 1) <= hoverId) {
-                element.classList.add("hover");
-            }
-        });
-    });
-    item.addEventListener('mouseout', () => {
-        elements.forEach(element => {
-            element.classList.remove("hover");
-        });
-    });
-    item.addEventListener('click', () => {
-        const hoverId = item.id.substr(item.id.length - 1);
-        if (item.id.startsWith('word')) {
-            navigator.clipboard.writeText(getWordsLength(hoverId)).then(function() {
-                close();
-            }, function() {
-                console.error("Unable to write to clipboard. :-(");
-            });
-        }
-        if (item.id.startsWith('sentence')) {
-            navigator.clipboard.writeText(getSentences(hoverId)).then(function() {
-                close();
-            }, function() {
-                console.error("Unable to write to clipboard. :-(");
-            });
-        }
-        if (item.id.startsWith('paragraph')) {
-            navigator.clipboard.writeText(getParagraphs(hoverId)).then(function() {
-                close();
-            }, function() {
-                console.error("Unable to write to clipboard. :-(");
-            });
-        }
-    });
 }
 
 /* Try load the dictionary */

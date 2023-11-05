@@ -29,6 +29,6 @@
                 "size": 32
         }],
         "default_title": "Lorem Quick Ipsum",
-        "default_popup": "popup/choose.html"
+        "default_popup": "popup/index.html"
     }
 }

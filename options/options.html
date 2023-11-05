@@ -11,13 +11,13 @@
 <form>
     <div>
         <div class="row">
-            <label>Minimal word length</label>
+            <label for="minWordLength">Minimal word length</label>
             <input type="number" id="minWordLength" value="0" min="0" max="16">
         </div>
         <div class="row">
             <div>
-                <label>First letter behaviour of words</label>
-                <select name="firestLetter" id="wordFirstLetter">
+                <label for="wordFirstLetter">First letter behaviour of words</label>
+                <select name="firstLetter" id="wordFirstLetter">
                     <option value="random">Random</option>
                     <option value="big">Always big</option>
                     <option value="small">Always small</option>
@@ -26,20 +26,24 @@
             <small class="text-muted">This will only affect coping words.</small>
         </div>
         <div class="row">
-            <label>Minimal words per sentence</label>
+            <label for="minSentenceLength">Minimal words per sentence</label>
             <input type="number" id="minSentenceLength" value="7" min="1" max="100">
         </div>
         <div class="row">
-            <label>Maximal words per sentence</label>
+            <label for="maxSentenceLength">Maximal words per sentence</label>
             <input type="number" id="maxSentenceLength" value="10" min="1" max="100">
         </div>
         <div class="row">
-            <label>Minimal sentences per paragraph</label>
+            <label for="minParagraphLength">Minimal sentences per paragraph</label>
             <input type="number" id="minParagraphLength" value="4" min="1" max="100">
         </div>
         <div class="row">
-            <label>Maximal sentences per paragraph</label>
+            <label for="maxParagraphLength">Maximal sentences per paragraph</label>
             <input type="number" id="maxParagraphLength" value="8" min="1" max="100">
+        </div>
+        <div class="row">
+            <label for="backgroundColorSelector">Background color</label>
+            <input type="color" id="backgroundColorSelector">
         </div>
     </div>
     <div class="row">
@@ -47,7 +51,8 @@
         <label class="hidden" id="okText">Ok</label>
     </div>
 </form>
-<script src="options.js"></script>
+<script type="module" src="./options.js"></script>
+<script type="module" src="../resources/colorHelper.js"></script>
 </body>
 
 </html>
