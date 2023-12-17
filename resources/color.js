@@ -58,9 +58,7 @@ export function hasWCAGContrastToWhite(color) {
     const inputToRGB = hexToRgb(color);
     const inputLuminance = luminance(inputToRGB.r, inputToRGB.g, inputToRGB.b);
 
-    const ratio = inputLuminance > WHITE_LUMINANCE
-        ? ((WHITE_LUMINANCE + 0.05) / (inputLuminance + 0.05))
-        : ((inputLuminance + 0.05) / (WHITE_LUMINANCE + 0.05));
+    const ratio = (inputLuminance + 0.05) / (WHITE_LUMINANCE + 0.05);
 
     return ratio < (1 / WCAG_CONTRAST);
 }

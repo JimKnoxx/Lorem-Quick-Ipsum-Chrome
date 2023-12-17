@@ -1,5 +1,5 @@
 /** SETUP */
-import {hasWCAGContrastToWhite, shadeColor} from "../resources/colorHelper.js";
+import {hasWCAGContrastToWhite, shadeColor} from "../resources/color.js";
 
 const WORD_FIRST_LETTER_SMALL = 'small';
 const WORD_FIRST_LETTER_BIG = 'big';
@@ -74,7 +74,7 @@ sentences.forEach(sentence => addClickEvent(sentence, sentences));
 const paragraphs = document.querySelectorAll('[id^=paragraph-]');
 paragraphs.forEach(paragraph => addClickEvent(paragraph, paragraphs));
 
-function addClickEvent(item, elements) {
+function addClickEvent(item) {
     item.addEventListener('click', () => {
         const hoverId = item.id.substring(item.id.length - 1);
         if (item.id.startsWith('word')) {

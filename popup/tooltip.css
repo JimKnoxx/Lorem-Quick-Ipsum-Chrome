@@ -15,14 +15,14 @@
   top: 150%;
   width: 7.5rem;
   z-index: 1;
-}
 
-.tooltip .tooltiptext.last {
-  top: -115%;
-}
+  &.tooltip-paragraph-fix {
+    top: 115%;
 
-.tooltip-paragraph-fix {
-  top: 115% !important;
+    &.last {
+      top: -75%;
+    }
+  }
 }
 
 .tooltip .tooltiptext.last::after {
@@ -42,6 +42,6 @@
   position: absolute;
 }
 
-.tooltip:hover .tooltiptext, .tooltip:hover .tooltiptext-last {
+.tooltip:hover .tooltiptext, .tooltip:hover {
   visibility: visible;
 }

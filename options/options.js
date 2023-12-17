@@ -1,4 +1,4 @@
-import {hslToHex} from "../resources/colorHelper.js";
+import {hslToHex} from "../resources/color.js";
 
 function saveOptions() {
     const device = window.chrome || window.browser;

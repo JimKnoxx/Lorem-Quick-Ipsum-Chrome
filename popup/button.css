@@ -9,12 +9,18 @@
   justify-content: center;
   padding: 0.625rem 0.75rem;
 
-  &.hover, &:hover {
+  &:hover {
+    cursor: pointer;
+    background: var(--button-hover-bg);
+  }
+
+  &.hover {
+    cursor: pointer;
     background: var(--button-hover-bg);
   }
 }
 
-.button-nopad {
+.button-no-padding {
   height: 1rem;
   padding: 0;
 }
