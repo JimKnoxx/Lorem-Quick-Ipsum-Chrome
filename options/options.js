@@ -1,3 +1,5 @@
+import {hslToHex} from "../resources/color.js";
+
 function saveOptions() {
     const device = window.chrome || window.browser;
     if (null == device) {
@@ -11,6 +13,7 @@ function saveOptions() {
         maxSentenceLength: document.getElementById("maxSentenceLength").value,
         minParagraphLength: document.getElementById("minParagraphLength").value,
         maxParagraphLength: document.getElementById("maxParagraphLength").value,
+        backgroundColorSelector: document.getElementById("backgroundColorSelector").value,
     }, function() {
         const status = document.getElementById("okText");
         status.classList.remove('hidden');
@@ -32,7 +35,8 @@ function restoreOptions() {
         minSentenceLength: 7,
         maxSentenceLength: 10,
         minParagraphLength: 4,
-        maxParagraphLength: 8
+        maxParagraphLength: 8,
+        backgroundColorSelector: hslToHex(0, 0, 40)
     }, function(res) {
         document.getElementById("minWordLength").value = res.minWordLength;
         document.getElementById("wordFirstLetter").value = legacySelectFix(res.wordFirstLetter);
@@ -40,6 +44,7 @@ function restoreOptions() {
         document.getElementById("maxSentenceLength").value = res.maxSentenceLength;
         document.getElementById("minParagraphLength").value = res.minParagraphLength;
         document.getElementById("maxParagraphLength").value = res.maxParagraphLength;
+        document.getElementById("backgroundColorSelector").value = res.backgroundColorSelector;
     });
 }
 

@@ -1,0 +1,17 @@
+:root {
+    --button-bg: hsl(0, 0%, 100%);
+    --button-hover-bg: hsl(0, 0%, 90%);
+    --panel-bg: hsl(0, 0%, 40%);
+    --text-color: hsl(0, 0%, 10%);
+    --tooltip-bg: hsl(0, 0%, 10%);
+    --tooltip-color: hsl(0, 0%, 100%);
+    --input-label: hsl(0, 0%, 85%);
+}
+
+[data-theme="dark"] {
+    --button-bg: hsl(0, 0%, 15%);
+    --text-color: hsl(0, 0%, 100%);
+    --tooltip-bg: hsl(0, 0%, 70%);
+    --tooltip-color: hsl(0, 0%, 10%);
+    --input-label: hsl(0, 0%, 25%);
+}

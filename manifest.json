@@ -2,13 +2,18 @@
     "description": "This plugin provides a simple and quick way to copy random Lorem Ipsum words, sentences and paragraphs.",
     "manifest_version": 3,
     "name": "Lorem Quick Ipsum",
-    "version": "1.0",
+    "version": "2.0",
     "icons": {
         "32": "icons/lorem-32.png"
     },
 
     "permissions": [
         "storage"
+    ],
+
+    "host_permissions": [
+        "https://thispersondoesnotexist.com/image",
+        "https://picsum.photos/*"
     ],
 
     "options_ui": {
@@ -24,6 +29,6 @@
                 "size": 32
         }],
         "default_title": "Lorem Quick Ipsum",
-        "default_popup": "popup/choose.html"
+        "default_popup": "popup/index.html"
     }
 }

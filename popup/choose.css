@@ -1,138 +1,65 @@
-@media (prefers-color-scheme: dark) {
-    html, body {
-        background: rgb(35, 34, 43);
-    }
-
-    .button.hover, .button-small.hover {
-        background-color: royalblue !important;
-    }
-
-    .settings {
-        background-color: dimgrey !important;
-    }
-
-    .settings:hover {
-        background-color: seagreen !important;
-    }
+body {
+    margin: 0;
+    color: var(--text-color);
 }
 
-html, body {
-    z-index: 10;
-    min-width: 400px;
-    padding: 0;
-    overflow-x: hidden;
+.container {
+    align-items: flex-start;
+    background: var(--panel-bg);
+    display: inline-flex;
+    gap: 1rem;
+    padding: 1rem;
 }
 
-.hidden {
-    display: none;
+.left {
+    align-items: flex-start;
+    align-self: stretch;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    justify-content: space-between;
+    width: 7.5rem;
 }
 
-.button-small {
-    display: inline-block;
-    background-color: grey;
-    float: left;
-    width: 70px;
-    height: 15px;
-    border-radius: 8px;
-    cursor: pointer;
-}
-
-.button {
-    background-color: grey;
-    border-radius: 8px;
-    cursor: pointer;
+.right {
+    align-items: flex-start;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
 }
 
 .row {
+    align-items: flex-start;
+    align-self: stretch;
     display: flex;
-    justify-content: space-between;
-    height: 15px;
-    margin-bottom: 10px;
+    gap: 0.25rem;
+
+    &.word-row {
+        height: 1rem;
+        gap: 0.5rem;
+    }
 }
 
-.paragraph {
-    height: 45px;
-    margin-bottom: 10px;
+#word-1 {
+    width: 1rem;
 }
 
-.button.hover, .button-small.hover {
-    background-color: lightblue;
+#word-2 {
+    width: 1.5rem;
+}
+
+#word-3 {
+    width: 2rem;
+}
+
+#word-4 {
+    width: 3rem;
+}
+
+#word-5 {
+    width: 4.5rem;
 }
 
 .settings {
-    background-color: lightgrey;
-    height: 25px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.settings:hover {
-    background-color: lightgreen;
-}
-
-.tooltip {
-    position: relative;
-}
-
-.tooltip .tooltiptext {
-    visibility: hidden;
-    width: 120px;
-    background-color: black;
-    color: #fff;
-    text-align: center;
-    border-radius: 6px;
-    padding: 5px;
-    position: absolute;
-    z-index: 1;
-    top: 150%;
-    left: 50%;
-    margin-left: -60px;
-}
-
-.tooltip .tooltiptext.last {
-    top: -115%;
-}
-
-.tooltip-left-fix {
-    margin-left: -35px !important;
-}
-
-.tooltip-right-fix {
-    margin-left: -85px !important;
-}
-
-.tooltip-paragraph-fix {
-    top: 115% !important;
-}
-
-.tooltip .tooltiptext.last::after {
-    bottom: 0;
-    top: 100%;
-    border-color: black transparent transparent transparent;
-}
-
-.tooltip .tooltiptext::after {
-    content: "";
-    position: absolute;
-    bottom: 100%;
-    left: 50%;
-    margin-left: -5px;
-    border-width: 5px;
-    border-style: solid;
-    border-color: transparent transparent black transparent;
-}
-
-.tooltip:hover .tooltiptext, .tooltip:hover .tooltiptext-last {
-    visibility: visible;
-}
-
-.noselect {
-    /* This is the reason why I will probably quit doing this and become a florist or something */
-    -webkit-touch-callout: none; /* iOS Safari */
-    -webkit-user-select: none; /* Safari */
-    -khtml-user-select: none; /* Konqueror HTML */
-    -moz-user-select: none; /* Old versions of Firefox */
-    -ms-user-select: none; /* Internet Explorer/Edge */
-    user-select: none; /* Non-prefixed version, currently supported by Chrome, Edge, Opera and Firefox */
+    margin-top: auto;
 }

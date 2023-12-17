@@ -1,4 +1,5 @@
 /** SETUP */
+import {hasWCAGContrastToWhite, shadeColor} from "../resources/color.js";
 
 const WORD_FIRST_LETTER_SMALL = 'small';
 const WORD_FIRST_LETTER_BIG = 'big';
@@ -26,7 +27,8 @@ device.storage.sync.get({
     minSentenceLength: 7,
     maxSentenceLength: 10,
     minParagraphLength: 4,
-    maxParagraphLength: 8
+    maxParagraphLength: 8,
+    backgroundColorSelector: "#666666FF",
 }, (res) => {
     minWordLength = res.minWordLength;
     switch (res.wordFirstLetter) {
@@ -47,42 +49,36 @@ device.storage.sync.get({
     maxSentenceLength = res.maxSentenceLength;
     minParagraphLength = res.minParagraphLength;
     maxParagraphLength = res.maxParagraphLength;
+    setPanelBackgroundColor(res.backgroundColorSelector);
 });
+
+function setPanelBackgroundColor(hex) {
+    const htmlRoot = document.querySelector(':root');
+    const darkMode = !hasWCAGContrastToWhite(hex);
+
+    htmlRoot.style.setProperty('--panel-bg', hex);
+    htmlRoot.style.setProperty('--button-hover-bg',
+        shadeColor(hex, darkMode ? -100 : 100)
+    );
+    if (darkMode) {
+        htmlRoot.setAttribute('data-theme', 'dark');
+    }
+}
 
 const words = document.querySelectorAll('[id^=word-]');
-words.forEach(word => hoverElements(word, words));
+words.forEach(word => addClickEvent(word, words));
 
 const sentences = document.querySelectorAll('[id^=sentence-]');
-sentences.forEach(sentence => hoverElements(sentence, sentences));
+sentences.forEach(sentence => addClickEvent(sentence, sentences));
 
 const paragraphs = document.querySelectorAll('[id^=paragraph-]');
-paragraphs.forEach(paragraph => hoverElements(paragraph, paragraphs));
+paragraphs.forEach(paragraph => addClickEvent(paragraph, paragraphs));
 
-document.getElementById('settings').addEventListener('click', () => {
-    chrome.runtime.openOptionsPage();
-    close();
-});
-
-/** FUNCTIONS */
-/* Adding event listener to "buttons" */
-function hoverElements(item, elements) {
-    item.addEventListener('mouseover', () => {
-        const hoverId = item.id.substr(item.id.length - 1);
-        elements.forEach(element => {
-            if (element.id.substr(element.id.length - 1) <= hoverId) {
-                element.classList.add("hover");
-            }
-        });
-    });
-    item.addEventListener('mouseout', () => {
-        elements.forEach(element => {
-            element.classList.remove("hover");
-        });
-    });
+function addClickEvent(item) {
     item.addEventListener('click', () => {
-        const hoverId = item.id.substr(item.id.length - 1);
+        const hoverId = item.id.substring(item.id.length - 1);
         if (item.id.startsWith('word')) {
-            navigator.clipboard.writeText(getWords(hoverId)).then(function() {
+            navigator.clipboard.writeText(getWordsLength(hoverId)).then(function() {
                 close();
             }, function() {
                 console.error("Unable to write to clipboard. :-(");
@@ -105,6 +101,65 @@ function hoverElements(item, elements) {
     });
 }
 
+document.getElementById('face').addEventListener('click', () => {
+    copyImage('https://thispersondoesnotexist.com/');
+});
+
+document.getElementById('sizePreset1').addEventListener('click', () => {
+    document.getElementById('fwidth').value = 512;
+    document.getElementById('fheight').value = 512;
+});
+
+document.getElementById('sizePreset2').addEventListener('click', () => {
+    document.getElementById('fwidth').value = 720;
+    document.getElementById('fheight').value = 480;
+});
+
+document.getElementById('sizePreset3').addEventListener('click', () => {
+    document.getElementById('fwidth').value = 640;
+    document.getElementById('fheight').value = 360;
+});
+
+document.getElementById('picsum').addEventListener('click', () => {
+    const w = document.getElementById('fwidth').value;
+    const h = document.getElementById('fheight').value;
+    const url = `https://picsum.photos/${w}/${h}`;
+
+    copyImage(url);
+});
+
+document.getElementById('settings').addEventListener('click', () => {
+    chrome.runtime.openOptionsPage();
+    close();
+});
+
+/** FUNCTIONS */
+async function copyImage(imageURL){
+  const blob = await imageToBlob(imageURL)
+  const item = new ClipboardItem({ "image/png": blob });
+  await navigator.clipboard.write([item]);
+  close();
+}
+
+function imageToBlob(imageURL) {
+  const img = new Image;
+  const c = document.createElement("canvas");
+  const ctx = c.getContext("2d");
+  img.crossOrigin = "";
+  img.src = imageURL;
+  return new Promise(resolve => {
+    img.onload = function () {
+      c.width = this.naturalWidth;
+      c.height = this.naturalHeight;
+      ctx.drawImage(this, 0, 0);
+      c.toBlob((blob) => {
+        // here the image is a blob
+        resolve(blob)
+    }, "image/png", 1);
+    };
+  });
+}
+
 /* Try load the dictionary */
 (async () => {
     try {
@@ -116,7 +171,7 @@ function hoverElements(item, elements) {
     }
 })()
 
-/* Filter the dictionary by user specified word length */
+/* Filter the dictionary by user specified word length, greater then */
 function getWordsLongerThen(length) {
     if (minWordLength === 0) {
         return lorem;
@@ -125,6 +180,37 @@ function getWordsLongerThen(length) {
     return lorem.filter((element) => {
         return element.length > length;
     });
+}
+
+/* Filter the dictionary by user specified word length, exactly */
+function getWordsExactly(length) {
+    return lorem.filter((element) => {
+        return element.length === length;
+    });
+}
+
+/* Returns a string with a defined length of words */
+const WORD_LENGTH = [4, 8, 16, 32, 64];
+function getWordsLength(length) {
+    if (length <= 2) {
+        const filteredWords = getWordsExactly(WORD_LENGTH[length - 1]);
+        if (wordFirstLetter === WORD_FIRST_LETTER_BIG || (wordFirstLetter === WORD_FIRST_LETTER_RANDOM && getRandomInt(10) > 4)) {
+            return capitalizeFirstLetter(filteredWords[getRandomInt(filteredWords.length)]);
+        } else {
+            return filteredWords[getRandomInt(filteredWords.length)];
+        }
+    } else {
+        let returnWord = "";
+        while (returnWord.length <= WORD_LENGTH[length - 1]) {
+            if (wordFirstLetter === WORD_FIRST_LETTER_BIG || (wordFirstLetter === WORD_FIRST_LETTER_RANDOM && getRandomInt(10) > 4)) {
+                returnWord += capitalizeFirstLetter(lorem[getRandomInt(lorem.length)]);
+            } else {
+                returnWord += lorem[getRandomInt(lorem.length)];
+            }
+        }
+
+        return returnWord.substring(0, WORD_LENGTH[length - 1]);
+    }
 }
 
 /* Returns a string with the given amount of words */
@@ -162,7 +248,7 @@ function getParagraphs(amount) {
     let paragraphs = "";
 
     for (let i = 0; i < amount; i++) {
-        paragraphs += getSentences(getRandomInt(maxParagraphLength, minParagraphLength)) + "\n"
+        paragraphs += getSentences(getRandomInt(maxParagraphLength, minParagraphLength)) + "\n\n"
     }
 
     return paragraphs.trim();
