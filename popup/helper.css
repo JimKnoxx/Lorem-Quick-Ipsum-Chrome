@@ -1,7 +1,3 @@
-.hidden {
-    display: none;
-}
-
 .noselect {
     -webkit-user-select: none;
     user-select: none;
